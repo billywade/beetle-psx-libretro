@@ -2847,7 +2847,11 @@ static bool glsm_state_ctx_init(glsm_ctx_params_t *params)
    hw_render.cache_context      = false;
 
    if (!params->environ_cb(RETRO_ENVIRONMENT_SET_HW_RENDER, &hw_render))
-      return false;
+    {
+       hw_render.context_type = RETRO_HW_CONTEXT_NONE;
+       params->environ_cb(RETRO_ENVIRONMENT_SET_HW_RENDER, &hw_render);
+       return false;
+    }
 
    return true;
 }
